@@ -1,0 +1,40 @@
+"""
+A simple blog schema demonstrating basic GraphQL to OpenAPI conversion.
+This example shows how the converter handles:
+- Lists → separate endpoints
+- Object references → ID fields
+- Nested types → sub-resource routes
+"""
+
+type Query {
+  "Fetch all users from the database"
+  users: [User!]!
+}
+
+"""
+Represents a user in the system.
+Users can create posts and comment on them.
+"""
+type User {
+  id: ID!
+  "The user's full name"
+  name: String!
+  "Email address for the user"
+  email: String!
+  "Posts created by this user - converted to GET /users/{id}/posts"
+  posts: [Post!]!
+}
+
+"""
+A blog post written by a user.
+Posts can have multiple comments.
+"""
+type Post {
+  id: ID!
+  "The post title"
+  title: String!
+  "The post content"
+  content: String!
+  "Reference to the post author - converted to authorId field"
+  author: User!
+}

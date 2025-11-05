@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-specifiedby - GraphQL Schema</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style id="custom-overrides">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            height: 100vh;
+            overflow: auto;
+        }
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 2rem !important;
+            background: #1e1e1e !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            min-height: 100vh;
+        }
+        code[class*="language-"] {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace !important;
+        }
+        /* Tone down string colors - make them less attention-grabbing */
+        .token.string {
+            color: #606060 !important;
+        }
+        /* Also tone down comments */
+        .token.comment {
+            color: #5a5a5a !important;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-graphql" id="schema-code"></code></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-graphql.min.js"></script>
+    <script>
+        // Set schema content
+        const schemaCode = `"""
+@specifiedBy Directive Example
+
+This schema demonstrates how custom scalar types with @specifiedBy directives
+are converted to OpenAPI formats. The @specifiedBy directive provides a URL
+to the specification that defines the scalar's format.
+
+The converter automatically recognizes common specifications:
+- RFC 4122 → format: uuid
+- ISO 8601 date-time → format: date-time
+- And includes the spec URL in the description
+"""
+
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time")
+scalar EmailAddress @specifiedBy(url: "https://tools.ietf.org/html/rfc5322")
+scalar URL @specifiedBy(url: "https://tools.ietf.org/html/rfc3986")
+scalar JSON @specifiedBy(url: "https://tools.ietf.org/html/rfc7159")
+
+type Query {
+  "Get all users"
+  users: [User!]!
+
+  "Get all events within a time range"
+  events(startTime: DateTime!, endTime: DateTime!): [Event!]!
+
+  "Search by email address"
+  findUserByEmail(email: EmailAddress!): User
+}
+
+type Mutation {
+  "Create a new user"
+  createUser(
+    id: UUID!
+    name: String!
+    email: EmailAddress!
+    website: URL
+  ): User!
+
+  "Create an event"
+  createEvent(
+    id: UUID!
+    name: String!
+    scheduledAt: DateTime!
+    metadata: JSON
+  ): Event!
+}
+
+"""
+User with various custom scalar types
+"""
+type User {
+  "Unique identifier (UUID format)"
+  id: UUID!
+
+  "User's full name"
+  name: String!
+
+  "Email address (RFC 5322 compliant)"
+  email: EmailAddress!
+
+  "Personal website URL"
+  website: URL
+
+  "Account creation timestamp"
+  createdAt: DateTime!
+
+  "Last login timestamp"
+  lastLoginAt: DateTime
+
+  "Custom user preferences as JSON"
+  preferences: JSON
+}
+
+"""
+Event with timestamps
+"""
+type Event {
+  "Unique event identifier"
+  id: UUID!
+
+  "Event name"
+  name: String!
+
+  "When the event is scheduled"
+  scheduledAt: DateTime!
+
+  "When the event was created"
+  createdAt: DateTime!
+
+  "Additional event metadata"
+  metadata: JSON
+}`;
+        document.getElementById('schema-code').textContent = schemaCode;
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>

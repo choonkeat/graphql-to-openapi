@@ -1,0 +1,178 @@
+openapi: 3.0.0
+info:
+    title: '@specifiedBy Directive Example'
+    description: |-
+        This schema demonstrates how custom scalar types with @specifiedBy directives
+        are converted to OpenAPI formats. The @specifiedBy directive provides a URL
+        to the specification that defines the scalar's format.
+
+        The converter automatically recognizes common specifications:
+        - RFC 4122 → format: uuid
+        - ISO 8601 date-time → format: date-time
+        - And includes the spec URL in the description
+
+        ---
+
+        Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /events:
+        get:
+            operationId: listEvents
+            summary: List events
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Event'
+        post:
+            operationId: createEvent
+            summary: Create an event
+            description: Create an event
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: string
+                                metadata:
+                                    type: string
+                                name:
+                                    type: string
+                                scheduledAt:
+                                    type: string
+                            required:
+                                - id
+                                - name
+                                - scheduledAt
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Event'
+    /findUserByEmail:
+        get:
+            operationId: findUserByEmail
+            summary: Search by email address
+            description: Search by email address
+            parameters:
+                - name: email
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /users:
+        get:
+            operationId: listUsers
+            summary: List users
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+        post:
+            operationId: createUser
+            summary: Create a new user
+            description: Create a new user
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                id:
+                                    type: string
+                                name:
+                                    type: string
+                                website:
+                                    type: string
+                            required:
+                                - id
+                                - name
+                                - email
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+components:
+    schemas:
+        Event:
+            type: object
+            description: Event with timestamps
+            properties:
+                createdAtId:
+                    type: string
+                    description: Reference to DateTime.id - use GET /datetimes/{createdAtId}
+                idId:
+                    type: string
+                    description: Reference to UUID.id - use GET /uuids/{idId}
+                metadataId:
+                    type: string
+                    description: Reference to JSON.id - use GET /jsons/{metadataId}
+                name:
+                    type: string
+                    description: Name - Event name
+                scheduledAtId:
+                    type: string
+                    description: Reference to DateTime.id - use GET /datetimes/{scheduledAtId}
+            required:
+                - idId
+                - name
+                - scheduledAtId
+                - createdAtId
+        User:
+            type: object
+            description: User with various custom scalar types
+            properties:
+                createdAtId:
+                    type: string
+                    description: Reference to DateTime.id - use GET /datetimes/{createdAtId}
+                emailId:
+                    type: string
+                    description: Reference to EmailAddress.id - use GET /emailaddresses/{emailId}
+                idId:
+                    type: string
+                    description: Reference to UUID.id - use GET /uuids/{idId}
+                lastLoginAtId:
+                    type: string
+                    description: Reference to DateTime.id - use GET /datetimes/{lastLoginAtId}
+                name:
+                    type: string
+                    description: Name - User's full name
+                preferencesId:
+                    type: string
+                    description: Reference to JSON.id - use GET /jsons/{preferencesId}
+                websiteId:
+                    type: string
+                    description: Reference to URL.id - use GET /urls/{websiteId}
+            required:
+                - idId
+                - name
+                - emailId
+                - createdAtId

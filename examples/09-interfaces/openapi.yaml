@@ -1,0 +1,352 @@
+openapi: 3.0.0
+info:
+    title: Example schema demonstrating GraphQL Interfaces and Unions
+    description: |-
+        Shows how interfaces and unions are converted to OpenAPI schemas
+
+        ---
+
+        Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /articles:
+        get:
+            operationId: listArticles
+            summary: List articles
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Article'
+        post:
+            operationId: createArticle
+            summary: Create a new article
+            description: Create a new article
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                authorId:
+                                    type: string
+                                content:
+                                    type: string
+                                title:
+                                    type: string
+                            required:
+                                - title
+                                - content
+                                - authorId
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Article'
+    /articles/{id}:
+        get:
+            operationId: getArticle
+            summary: Get article by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Article'
+    /content:
+        get:
+            operationId: content
+            summary: Get all content items
+            description: Get all content items
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Content'
+    /node:
+        get:
+            operationId: node
+            summary: Get any node by its ID
+            description: Get any node by its ID
+            parameters:
+                - name: id
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Node'
+    /publishContent:
+        post:
+            operationId: publishContent
+            summary: Publish Content
+            description: Publish Content - Publish any content item
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: string
+                            required:
+                                - id
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Content'
+    /search:
+        get:
+            operationId: search
+            summary: Search across all content types
+            description: Search across all content types
+            parameters:
+                - name: query
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/SearchResult'
+    /videos:
+        get:
+            operationId: listVideos
+            summary: List videos
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Video'
+        post:
+            operationId: createVideo
+            summary: Create a new video
+            description: Create a new video
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                duration:
+                                    type: integer
+                                    format: int32
+                                title:
+                                    type: string
+                                url:
+                                    type: string
+                            required:
+                                - title
+                                - url
+                                - duration
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video'
+    /videos/{id}:
+        get:
+            operationId: getVideo
+            summary: Get video by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Video'
+components:
+    schemas:
+        Article:
+            type: object
+            description: Article content type
+            properties:
+                authorId:
+                    type: string
+                    description: Author Id - ID of the article author
+                content:
+                    type: string
+                    description: Content - Article body content
+                createdAt:
+                    type: string
+                    description: Created At - When the article was created
+                id:
+                    type: string
+                    description: Id - Unique identifier
+                published:
+                    type: boolean
+                    description: Published - Publication status
+                readingTime:
+                    type: integer
+                    format: int32
+                    description: Reading Time - Estimated reading time in minutes
+                title:
+                    type: string
+                    description: Title - Article title
+                updatedAt:
+                    type: string
+                    description: Updated At - When the article was last updated
+            required:
+                - id
+                - title
+                - content
+                - authorId
+                - published
+                - createdAt
+                - updatedAt
+                - readingTime
+        Content:
+            type: object
+            description: Interface for content that can be published
+            properties:
+                createdAt:
+                    type: string
+                    description: Created At - When the entity was created
+                id:
+                    type: string
+                    description: Id - Unique identifier
+                published:
+                    type: boolean
+                    description: Published - Publication status
+                title:
+                    type: string
+                    description: Title - Content title
+                updatedAt:
+                    type: string
+                    description: Updated At - When the entity was last updated
+        Node:
+            type: object
+            description: Base interface for all entities with IDs
+            properties:
+                id:
+                    type: string
+                    description: Id - Unique identifier
+        PublishableContent:
+            description: Union of all publishable content types
+            oneOf:
+                - $ref: '#/components/schemas/Article'
+                - $ref: '#/components/schemas/Video'
+        SearchResult:
+            description: Union of all searchable content types
+            oneOf:
+                - $ref: '#/components/schemas/Article'
+                - $ref: '#/components/schemas/Video'
+                - $ref: '#/components/schemas/User'
+        Timestamped:
+            type: object
+            description: Interface for timestamped entities
+            properties:
+                createdAt:
+                    type: string
+                    description: Created At - When the entity was created
+                updatedAt:
+                    type: string
+                    description: Updated At - When the entity was last updated
+        User:
+            type: object
+            description: User who creates content
+            properties:
+                createdAt:
+                    type: string
+                    description: Created At - When the user account was created
+                email:
+                    type: string
+                    description: Email - User's email address
+                id:
+                    type: string
+                    description: Id - Unique identifier
+                name:
+                    type: string
+                    description: Name - User's display name
+                updatedAt:
+                    type: string
+                    description: Updated At - When the user account was last updated
+            required:
+                - id
+                - name
+                - email
+                - createdAt
+                - updatedAt
+        Video:
+            type: object
+            description: Video content type
+            properties:
+                createdAt:
+                    type: string
+                    description: Created At - When the video was created
+                duration:
+                    type: integer
+                    format: int32
+                    description: Duration - Video duration in seconds
+                id:
+                    type: string
+                    description: Id - Unique identifier
+                published:
+                    type: boolean
+                    description: Published - Publication status
+                thumbnail:
+                    type: string
+                    description: Thumbnail - Video thumbnail URL
+                title:
+                    type: string
+                    description: Title - Video title
+                updatedAt:
+                    type: string
+                    description: Updated At - When the video was last updated
+                url:
+                    type: string
+                    description: Url - Video URL
+            required:
+                - id
+                - title
+                - url
+                - duration
+                - published
+                - createdAt
+                - updatedAt

@@ -1,0 +1,5 @@
+{
+  "number": "02",
+  "title": "CRUD / RESTful",
+  "description": "Shows REST pattern detection that consolidates CRUD operations into proper RESTful routes with HTTP methods (GET, POST, PUT, DELETE)."
+}

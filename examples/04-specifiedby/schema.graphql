@@ -1,0 +1,93 @@
+"""
+@specifiedBy Directive Example
+
+This schema demonstrates how custom scalar types with @specifiedBy directives
+are converted to OpenAPI formats. The @specifiedBy directive provides a URL
+to the specification that defines the scalar's format.
+
+The converter automatically recognizes common specifications:
+- RFC 4122 → format: uuid
+- ISO 8601 date-time → format: date-time
+- And includes the spec URL in the description
+"""
+
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/andimarek/date-time")
+scalar EmailAddress @specifiedBy(url: "https://tools.ietf.org/html/rfc5322")
+scalar URL @specifiedBy(url: "https://tools.ietf.org/html/rfc3986")
+scalar JSON @specifiedBy(url: "https://tools.ietf.org/html/rfc7159")
+
+type Query {
+  "Get all users"
+  users: [User!]!
+
+  "Get all events within a time range"
+  events(startTime: DateTime!, endTime: DateTime!): [Event!]!
+
+  "Search by email address"
+  findUserByEmail(email: EmailAddress!): User
+}
+
+type Mutation {
+  "Create a new user"
+  createUser(
+    id: UUID!
+    name: String!
+    email: EmailAddress!
+    website: URL
+  ): User!
+
+  "Create an event"
+  createEvent(
+    id: UUID!
+    name: String!
+    scheduledAt: DateTime!
+    metadata: JSON
+  ): Event!
+}
+
+"""
+User with various custom scalar types
+"""
+type User {
+  "Unique identifier (UUID format)"
+  id: UUID!
+
+  "User's full name"
+  name: String!
+
+  "Email address (RFC 5322 compliant)"
+  email: EmailAddress!
+
+  "Personal website URL"
+  website: URL
+
+  "Account creation timestamp"
+  createdAt: DateTime!
+
+  "Last login timestamp"
+  lastLoginAt: DateTime
+
+  "Custom user preferences as JSON"
+  preferences: JSON
+}
+
+"""
+Event with timestamps
+"""
+type Event {
+  "Unique event identifier"
+  id: UUID!
+
+  "Event name"
+  name: String!
+
+  "When the event is scheduled"
+  scheduledAt: DateTime!
+
+  "When the event was created"
+  createdAt: DateTime!
+
+  "Additional event metadata"
+  metadata: JSON
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-crud - OpenAPI YAML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style id="custom-overrides">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            height: 100vh;
+            overflow: auto;
+        }
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 2rem !important;
+            background: #1e1e1e !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            min-height: 100vh;
+        }
+        code[class*="language-"] {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace !important;
+        }
+        /* Tone down string colors - make them less attention-grabbing */
+        .token.string {
+            color: #606060 !important;
+        }
+        /* Also tone down comments */
+        .token.comment {
+            color: #5a5a5a !important;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-yaml" id="yaml-code"></code></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script>
+        // Set YAML content
+        const yamlCode = `openapi: 3.0.0
+info:
+    title: RESTful CRUD Operations Example
+    description: |-
+        This schema demonstrates REST pattern detection. When the converter finds
+        both list operations (users: [User!]!) AND create mutations (createUser),
+        it consolidates them into proper RESTful routes with HTTP methods.
+
+        Pattern detection rules:
+        1. Must have BOTH {resource}s: [T] + create{Resource}(...) to trigger
+        2. Strict matching - no fuzzy matching (e.g., addUser won't match)
+        3. Additional operations (get, update, delete) are optional but recognized
+
+        ---
+
+        Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /addComment:
+        post:
+            operationId: addComment
+            summary: Add Comment
+            description: Add Comment - This mutation does NOT match REST pattern (wrong prefix)
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                postId:
+                                    type: string
+                                text:
+                                    type: string
+                            required:
+                                - postId
+                                - text
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Comment'
+    /posts:
+        get:
+            operationId: listPosts
+            summary: List posts
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Post'
+        post:
+            operationId: createPost
+            summary: Create a new post
+            description: Create a new post - triggers REST pattern for 'post'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                authorId:
+                                    type: string
+                                content:
+                                    type: string
+                                title:
+                                    type: string
+                            required:
+                                - title
+                                - content
+                                - authorId
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Post'
+    /posts/{id}:
+        get:
+            operationId: getPost
+            summary: Get post by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Post'
+        put:
+            operationId: updatePost
+            summary: Update a post
+            description: Update a post - consolidated into PUT /posts/{id}
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                content:
+                                    type: string
+                                id:
+                                    type: string
+                                title:
+                                    type: string
+                            required:
+                                - id
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Post'
+        delete:
+            operationId: deletePost
+            summary: Delete a post
+            description: Delete a post - consolidated into DELETE /posts/{id}
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+    /users:
+        get:
+            operationId: listUsers
+            summary: List users
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/User'
+        post:
+            operationId: createUser
+            summary: Create a new user
+            description: Create a new user - triggers REST pattern for 'user'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                name:
+                                    type: string
+                            required:
+                                - name
+                                - email
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/User'
+    /users/{id}:
+        get:
+            operationId: getUser
+            summary: Get user by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/User'
+        put:
+            operationId: updateUser
+            summary: Update an existing user
+            description: Update an existing user - consolidated into PUT /users/{id}
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                id:
+                                    type: string
+                                name:
+                                    type: string
+                            required:
+                                - id
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/User'
+        delete:
+            operationId: deleteUser
+            summary: Delete a user
+            description: Delete a user - consolidated into DELETE /users/{id}
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: boolean
+    /users/{id}/posts:
+        get:
+            operationId: getUserPosts
+            summary: Get posts by user
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Post'
+components:
+    schemas:
+        Comment:
+            type: object
+            description: |-
+                Comment entity without REST pattern
+                Result: Only POST /addComment (no consolidation)
+            properties:
+                id:
+                    type: string
+                postId:
+                    type: string
+                text:
+                    type: string
+            required:
+                - id
+                - text
+                - postId
+        Post:
+            type: object
+            description: |-
+                Post entity with full CRUD operations
+                Result: Consolidated into /posts with proper HTTP methods
+            properties:
+                authorId:
+                    type: string
+                content:
+                    type: string
+                id:
+                    type: string
+                title:
+                    type: string
+            required:
+                - id
+                - title
+                - content
+                - authorId
+        User:
+            type: object
+            description: |-
+                User entity with full CRUD operations
+                Result: Consolidated into /users with proper HTTP methods
+            properties:
+                email:
+                    type: string
+                id:
+                    type: string
+                name:
+                    type: string
+            required:
+                - id
+                - name
+                - email`;
+        document.getElementById('yaml-code').textContent = yamlCode;
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>

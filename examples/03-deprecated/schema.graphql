@@ -1,0 +1,74 @@
+"""
+@deprecated Directive Example
+
+This schema demonstrates how the @deprecated directive is converted to OpenAPI.
+GraphQL's @deprecated directive maps directly to OpenAPI's deprecated flag,
+helping API consumers understand which fields and operations to avoid.
+"""
+
+type Query {
+  "Fetch all users (current version)"
+  users: [User!]!
+
+  "DEPRECATED: Use users query instead"
+  user(id: ID!): User @deprecated(reason: "Use users query with filter parameter instead")
+
+  "Fetch all posts"
+  posts: [Post!]!
+
+  "Get current API version info"
+  version: String!
+
+  "DEPRECATED: Old endpoint"
+  legacySearch(query: String!): [SearchResult!]! @deprecated(reason: "Use the new search endpoint with better filtering")
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+
+  "DEPRECATED: Use createUser instead"
+  registerUser(name: String!, email: String!): User! @deprecated(reason: "Use createUser with input object for better validation")
+}
+
+"""
+User type with some deprecated fields demonstrating field-level deprecation
+"""
+type User {
+  id: ID!
+  name: String!
+
+  "Current email field - use this"
+  email: String!
+
+  "DEPRECATED: Replaced by email field"
+  emailAddress: String! @deprecated(reason: "Use email field instead")
+
+  "DEPRECATED: Being removed"
+  username: String @deprecated(reason: "Username is being removed in the next version")
+
+  "Array of email addresses for users with multiple emails"
+  emails: [String!]!
+
+  posts: [Post!]!
+}
+
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  authorId: ID!
+
+  "DEPRECATED field"
+  legacyStatus: String @deprecated(reason: "Use status field from the extended PostInfo type")
+}
+
+type SearchResult {
+  id: ID!
+  title: String!
+  snippet: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+}

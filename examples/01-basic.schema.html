@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-basic - GraphQL Schema</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style id="custom-overrides">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            height: 100vh;
+            overflow: auto;
+        }
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 2rem !important;
+            background: #1e1e1e !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            min-height: 100vh;
+        }
+        code[class*="language-"] {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace !important;
+        }
+        /* Tone down string colors - make them less attention-grabbing */
+        .token.string {
+            color: #606060 !important;
+        }
+        /* Also tone down comments */
+        .token.comment {
+            color: #5a5a5a !important;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-graphql" id="schema-code"></code></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-graphql.min.js"></script>
+    <script>
+        // Set schema content
+        const schemaCode = `"""
+A simple blog schema demonstrating basic GraphQL to OpenAPI conversion.
+This example shows how the converter handles:
+- Lists → separate endpoints
+- Object references → ID fields
+- Nested types → sub-resource routes
+"""
+
+type Query {
+  "Fetch all users from the database"
+  users: [User!]!
+}
+
+"""
+Represents a user in the system.
+Users can create posts and comment on them.
+"""
+type User {
+  id: ID!
+  "The user's full name"
+  name: String!
+  "Email address for the user"
+  email: String!
+  "Posts created by this user - converted to GET /users/{id}/posts"
+  posts: [Post!]!
+}
+
+"""
+A blog post written by a user.
+Posts can have multiple comments.
+"""
+type Post {
+  id: ID!
+  "The post title"
+  title: String!
+  "The post content"
+  content: String!
+  "Reference to the post author - converted to authorId field"
+  author: User!
+}`;
+        document.getElementById('schema-code').textContent = schemaCode;
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>

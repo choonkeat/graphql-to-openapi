@@ -1,0 +1,239 @@
+openapi: 3.0.0
+info:
+    title: '@deprecated Directive Example'
+    description: |-
+        This schema demonstrates how the @deprecated directive is converted to OpenAPI.
+        GraphQL's @deprecated directive maps directly to OpenAPI's deprecated flag,
+        helping API consumers understand which fields and operations to avoid.
+
+        ---
+
+        Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /legacySearch:
+        get:
+            operationId: legacySearch
+            summary: 'DEPRECATED: Use the new search endpoint with better filtering'
+            description: |-
+                DEPRECATED: Use the new search endpoint with better filtering
+
+                Legacy Search - DEPRECATED: Old endpoint
+            parameters:
+                - name: query
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/SearchResult'
+            deprecated: true
+    /posts:
+        get:
+            operationId: posts
+            summary: Fetch all posts
+            description: Fetch all posts
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Post'
+    /registerUser:
+        post:
+            operationId: registerUser
+            summary: 'DEPRECATED: Use createUser with input object for better validation'
+            description: |-
+                DEPRECATED: Use createUser with input object for better validation
+
+                Register User - DEPRECATED: Use createUser instead
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                name:
+                                    type: string
+                            required:
+                                - name
+                                - email
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+            deprecated: true
+    /users:
+        get:
+            operationId: listUsers
+            summary: List users
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+        post:
+            operationId: createUser
+            summary: Create user
+            description: Create user
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                input:
+                                    $ref: '#/components/schemas/CreateUserInput'
+                            required:
+                                - input
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /users/{id}:
+        get:
+            operationId: getUser
+            summary: Get user by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /users/{id}/posts:
+        get:
+            operationId: getUserPosts
+            summary: Get posts by user
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Post'
+    /version:
+        get:
+            operationId: version
+            summary: Get current API version info
+            description: Get current API version info
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+components:
+    schemas:
+        CreateUserInput:
+            type: object
+            properties:
+                email:
+                    type: string
+                name:
+                    type: string
+            required:
+                - name
+                - email
+        Post:
+            type: object
+            properties:
+                authorId:
+                    type: string
+                content:
+                    type: string
+                id:
+                    type: string
+                legacyStatus:
+                    type: string
+                    description: 'Legacy Status - DEPRECATED: Use status field from the extended PostInfo type'
+                    deprecated: true
+                title:
+                    type: string
+            required:
+                - id
+                - title
+                - content
+                - authorId
+        SearchResult:
+            type: object
+            properties:
+                id:
+                    type: string
+                snippet:
+                    type: string
+                title:
+                    type: string
+            required:
+                - id
+                - title
+                - snippet
+        User:
+            type: object
+            description: User type with some deprecated fields demonstrating field-level deprecation
+            properties:
+                email:
+                    type: string
+                    description: Email - Current email field - use this
+                emailAddress:
+                    type: string
+                    description: 'Email Address - DEPRECATED: Use email field instead'
+                    deprecated: true
+                emails:
+                    type: array
+                    description: Emails - Array of email addresses for users with multiple emails
+                    items:
+                        type: string
+                id:
+                    type: string
+                name:
+                    type: string
+                username:
+                    type: string
+                    description: 'Username - DEPRECATED: Username is being removed in the next version'
+                    deprecated: true
+            required:
+                - id
+                - name
+                - email
+                - emailAddress
+                - emails

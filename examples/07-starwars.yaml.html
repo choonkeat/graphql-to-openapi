@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-starwars - OpenAPI YAML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style id="custom-overrides">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            height: 100vh;
+            overflow: auto;
+        }
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 2rem !important;
+            background: #1e1e1e !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            min-height: 100vh;
+        }
+        code[class*="language-"] {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace !important;
+        }
+        /* Tone down string colors - make them less attention-grabbing */
+        .token.string {
+            color: #606060 !important;
+        }
+        /* Also tone down comments */
+        .token.comment {
+            color: #5a5a5a !important;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-yaml" id="yaml-code"></code></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"></script>
+    <script>
+        // Set YAML content
+        const yamlCode = `openapi: 3.0.0
+info:
+    title: A single film.
+    description: Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /allFilmsId:
+        get:
+            operationId: allFilmsId
+            summary: All Films Id
+            description: All Films Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/FilmsConnection'
+    /allPeopleId:
+        get:
+            operationId: allPeopleId
+            summary: All People Id
+            description: All People Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/PeopleConnection'
+    /allPlanetsId:
+        get:
+            operationId: allPlanetsId
+            summary: All Planets Id
+            description: All Planets Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/PlanetsConnection'
+    /allSpeciesId:
+        get:
+            operationId: allSpeciesId
+            summary: All Species Id
+            description: All Species Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/SpeciesConnection'
+    /allStarshipsId:
+        get:
+            operationId: allStarshipsId
+            summary: All Starships Id
+            description: All Starships Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/StarshipsConnection'
+    /allVehiclesId:
+        get:
+            operationId: allVehiclesId
+            summary: All Vehicles Id
+            description: All Vehicles Id
+            parameters:
+                - name: after
+                  in: query
+                  schema:
+                    type: string
+                - name: before
+                  in: query
+                  schema:
+                    type: string
+                - name: first
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: last
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/VehiclesConnection'
+    /filmId:
+        get:
+            operationId: filmId
+            summary: Film Id
+            description: Film Id
+            parameters:
+                - name: filmID
+                  in: query
+                  schema:
+                    type: string
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Film'
+    /filmcharactersconnections/{id}/characters:
+        get:
+            operationId: getFilmCharactersConnectionCharacters
+            summary: Get characters by filmcharactersconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /filmcharactersconnections/{id}/edges:
+        get:
+            operationId: getFilmCharactersConnectionEdges
+            summary: Get edges by filmcharactersconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmCharactersEdge'
+    /filmplanetsconnections/{id}/edges:
+        get:
+            operationId: getFilmPlanetsConnectionEdges
+            summary: Get edges by filmplanetsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmPlanetsEdge'
+    /filmplanetsconnections/{id}/planets:
+        get:
+            operationId: getFilmPlanetsConnectionPlanets
+            summary: Get planets by filmplanetsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Planet'
+    /filmsconnections/{id}/edges:
+        get:
+            operationId: getFilmsConnectionEdges
+            summary: Get edges by filmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmsEdge'
+    /filmsconnections/{id}/films:
+        get:
+            operationId: getFilmsConnectionFilms
+            summary: Get films by filmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /filmspeciesconnections/{id}/edges:
+        get:
+            operationId: getFilmSpeciesConnectionEdges
+            summary: Get edges by filmspeciesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmSpeciesEdge'
+    /filmspeciesconnections/{id}/species:
+        get:
+            operationId: getFilmSpeciesConnectionSpecies
+            summary: Get species by filmspeciesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Species'
+    /filmstarshipsconnections/{id}/edges:
+        get:
+            operationId: getFilmStarshipsConnectionEdges
+            summary: Get edges by filmstarshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmStarshipsEdge'
+    /filmstarshipsconnections/{id}/starships:
+        get:
+            operationId: getFilmStarshipsConnectionStarships
+            summary: Get starships by filmstarshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Starship'
+    /filmvehiclesconnections/{id}/edges:
+        get:
+            operationId: getFilmVehiclesConnectionEdges
+            summary: Get edges by filmvehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/FilmVehiclesEdge'
+    /filmvehiclesconnections/{id}/vehicles:
+        get:
+            operationId: getFilmVehiclesConnectionVehicles
+            summary: Get vehicles by filmvehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Vehicle'
+    /nodeId:
+        get:
+            operationId: nodeId
+            summary: Node Id
+            description: Node Id - Fetches an object given its ID
+            parameters:
+                - name: id
+                  in: query
+                  description: The ID of an object
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Node'
+    /peopleconnections/{id}/edges:
+        get:
+            operationId: getPeopleConnectionEdges
+            summary: Get edges by peopleconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PeopleEdge'
+    /peopleconnections/{id}/people:
+        get:
+            operationId: getPeopleConnectionPeople
+            summary: Get people by peopleconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /personId:
+        get:
+            operationId: personId
+            summary: Person Id
+            description: Person Id
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+                - name: personID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Person'
+    /personfilmsconnections/{id}/edges:
+        get:
+            operationId: getPersonFilmsConnectionEdges
+            summary: Get edges by personfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PersonFilmsEdge'
+    /personfilmsconnections/{id}/films:
+        get:
+            operationId: getPersonFilmsConnectionFilms
+            summary: Get films by personfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /personstarshipsconnections/{id}/edges:
+        get:
+            operationId: getPersonStarshipsConnectionEdges
+            summary: Get edges by personstarshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PersonStarshipsEdge'
+    /personstarshipsconnections/{id}/starships:
+        get:
+            operationId: getPersonStarshipsConnectionStarships
+            summary: Get starships by personstarshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Starship'
+    /personvehiclesconnections/{id}/edges:
+        get:
+            operationId: getPersonVehiclesConnectionEdges
+            summary: Get edges by personvehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PersonVehiclesEdge'
+    /personvehiclesconnections/{id}/vehicles:
+        get:
+            operationId: getPersonVehiclesConnectionVehicles
+            summary: Get vehicles by personvehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Vehicle'
+    /planetId:
+        get:
+            operationId: planetId
+            summary: Planet Id
+            description: Planet Id
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+                - name: planetID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Planet'
+    /planetfilmsconnections/{id}/edges:
+        get:
+            operationId: getPlanetFilmsConnectionEdges
+            summary: Get edges by planetfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PlanetFilmsEdge'
+    /planetfilmsconnections/{id}/films:
+        get:
+            operationId: getPlanetFilmsConnectionFilms
+            summary: Get films by planetfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /planetresidentsconnections/{id}/edges:
+        get:
+            operationId: getPlanetResidentsConnectionEdges
+            summary: Get edges by planetresidentsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PlanetResidentsEdge'
+    /planetresidentsconnections/{id}/residents:
+        get:
+            operationId: getPlanetResidentsConnectionResidents
+            summary: Get residents by planetresidentsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /planetsconnections/{id}/edges:
+        get:
+            operationId: getPlanetsConnectionEdges
+            summary: Get edges by planetsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/PlanetsEdge'
+    /planetsconnections/{id}/planets:
+        get:
+            operationId: getPlanetsConnectionPlanets
+            summary: Get planets by planetsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Planet'
+    /speciesId:
+        get:
+            operationId: speciesId
+            summary: Species Id
+            description: Species Id
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+                - name: speciesID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Species'
+    /speciesconnections/{id}/edges:
+        get:
+            operationId: getSpeciesConnectionEdges
+            summary: Get edges by speciesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/SpeciesEdge'
+    /speciesconnections/{id}/species:
+        get:
+            operationId: getSpeciesConnectionSpecies
+            summary: Get species by speciesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Species'
+    /speciesfilmsconnections/{id}/edges:
+        get:
+            operationId: getSpeciesFilmsConnectionEdges
+            summary: Get edges by speciesfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/SpeciesFilmsEdge'
+    /speciesfilmsconnections/{id}/films:
+        get:
+            operationId: getSpeciesFilmsConnectionFilms
+            summary: Get films by speciesfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /speciespeopleconnections/{id}/edges:
+        get:
+            operationId: getSpeciesPeopleConnectionEdges
+            summary: Get edges by speciespeopleconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/SpeciesPeopleEdge'
+    /speciespeopleconnections/{id}/people:
+        get:
+            operationId: getSpeciesPeopleConnectionPeople
+            summary: Get people by speciespeopleconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /starshipId:
+        get:
+            operationId: starshipId
+            summary: Starship Id
+            description: Starship Id
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+                - name: starshipID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Starship'
+    /starshipfilmsconnections/{id}/edges:
+        get:
+            operationId: getStarshipFilmsConnectionEdges
+            summary: Get edges by starshipfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/StarshipFilmsEdge'
+    /starshipfilmsconnections/{id}/films:
+        get:
+            operationId: getStarshipFilmsConnectionFilms
+            summary: Get films by starshipfilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /starshippilotsconnections/{id}/edges:
+        get:
+            operationId: getStarshipPilotsConnectionEdges
+            summary: Get edges by starshippilotsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/StarshipPilotsEdge'
+    /starshippilotsconnections/{id}/pilots:
+        get:
+            operationId: getStarshipPilotsConnectionPilots
+            summary: Get pilots by starshippilotsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /starshipsconnections/{id}/edges:
+        get:
+            operationId: getStarshipsConnectionEdges
+            summary: Get edges by starshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/StarshipsEdge'
+    /starshipsconnections/{id}/starships:
+        get:
+            operationId: getStarshipsConnectionStarships
+            summary: Get starships by starshipsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Starship'
+    /vehicleId:
+        get:
+            operationId: vehicleId
+            summary: Vehicle Id
+            description: Vehicle Id
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+                - name: vehicleID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/Vehicle'
+    /vehiclefilmsconnections/{id}/edges:
+        get:
+            operationId: getVehicleFilmsConnectionEdges
+            summary: Get edges by vehiclefilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/VehicleFilmsEdge'
+    /vehiclefilmsconnections/{id}/films:
+        get:
+            operationId: getVehicleFilmsConnectionFilms
+            summary: Get films by vehiclefilmsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Film'
+    /vehiclepilotsconnections/{id}/edges:
+        get:
+            operationId: getVehiclePilotsConnectionEdges
+            summary: Get edges by vehiclepilotsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/VehiclePilotsEdge'
+    /vehiclepilotsconnections/{id}/pilots:
+        get:
+            operationId: getVehiclePilotsConnectionPilots
+            summary: Get pilots by vehiclepilotsconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Person'
+    /vehiclesconnections/{id}/edges:
+        get:
+            operationId: getVehiclesConnectionEdges
+            summary: Get edges by vehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/VehiclesEdge'
+    /vehiclesconnections/{id}/vehicles:
+        get:
+            operationId: getVehiclesConnectionVehicles
+            summary: Get vehicles by vehiclesconnection
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/Vehicle'
+components:
+    schemas:
+        Film:
+            type: object
+            description: A single film.
+            properties:
+                characterConnectionId:
+                    type: string
+                    description: Reference to FilmCharactersConnection.id - use GET /filmcharactersconnections/{characterConnectionId}
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                director:
+                    type: string
+                    description: Director - The name of the director of this film.
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                episodeID:
+                    type: integer
+                    format: int32
+                    description: Episode I D - The episode number of this film.
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                openingCrawl:
+                    type: string
+                    description: Opening Crawl - The opening paragraphs at the beginning of this film.
+                planetConnectionId:
+                    type: string
+                    description: Reference to FilmPlanetsConnection.id - use GET /filmplanetsconnections/{planetConnectionId}
+                producers:
+                    type: array
+                    description: Producers - The name(s) of the producer(s) of this film.
+                    items:
+                        type: string
+                releaseDate:
+                    type: string
+                    description: Release Date - The ISO 8601 date format of film release at original creator country.
+                speciesConnectionId:
+                    type: string
+                    description: Reference to FilmSpeciesConnection.id - use GET /filmspeciesconnections/{speciesConnectionId}
+                starshipConnectionId:
+                    type: string
+                    description: Reference to FilmStarshipsConnection.id - use GET /filmstarshipsconnections/{starshipConnectionId}
+                title:
+                    type: string
+                    description: Title - The title of this film.
+                vehicleConnectionId:
+                    type: string
+                    description: Reference to FilmVehiclesConnection.id - use GET /filmvehiclesconnections/{vehicleConnectionId}
+            required:
+                - id
+        FilmCharactersConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmCharactersEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        FilmPlanetsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmPlanetsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Planet.id - use GET /planets/{nodeId}
+            required:
+                - cursor
+        FilmSpeciesConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmSpeciesEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Species.id - use GET /specieses/{nodeId}
+            required:
+                - cursor
+        FilmStarshipsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmStarshipsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Starship.id - use GET /starships/{nodeId}
+            required:
+                - cursor
+        FilmVehiclesConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmVehiclesEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Vehicle.id - use GET /vehicles/{nodeId}
+            required:
+                - cursor
+        FilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        FilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        Node:
+            type: object
+            description: An object with an ID
+            properties:
+                id:
+                    type: string
+                    description: Id - The id of the object.
+        PageInfo:
+            type: object
+            description: Information about pagination in a connection.
+            properties:
+                endCursor:
+                    type: string
+                    description: End Cursor - When paginating forwards, the cursor to continue.
+                hasNextPage:
+                    type: boolean
+                    description: Has Next Page - When paginating forwards, are there more items?
+                hasPreviousPage:
+                    type: boolean
+                    description: Has Previous Page - When paginating backwards, are there more items?
+                startCursor:
+                    type: string
+                    description: Start Cursor - When paginating backwards, the cursor to continue.
+            required:
+                - hasNextPage
+                - hasPreviousPage
+        PeopleConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PeopleEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        Person:
+            type: object
+            description: An individual person or character within the Star Wars universe.
+            properties:
+                birthYear:
+                    type: string
+                    description: |-
+                        Birth Year - The birth year of the person, using the in-universe standard of BBY or ABY -
+                        Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin is
+                        a battle that occurs at the end of Star Wars episode IV: A New Hope.
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                eyeColor:
+                    type: string
+                    description: |-
+                        Eye Color - The eye color of this person. Will be "unknown" if not known or "n/a" if the
+                        person does not have an eye.
+                filmConnectionId:
+                    type: string
+                    description: Reference to PersonFilmsConnection.id - use GET /personfilmsconnections/{filmConnectionId}
+                gender:
+                    type: string
+                    description: |-
+                        Gender - The gender of this person. Either "Male", "Female" or "unknown",
+                        "n/a" if the person does not have a gender.
+                hairColor:
+                    type: string
+                    description: |-
+                        Hair Color - The hair color of this person. Will be "unknown" if not known or "n/a" if the
+                        person does not have hair.
+                height:
+                    type: integer
+                    format: int32
+                    description: Height - The height of the person in centimeters.
+                homeworldId:
+                    type: string
+                    description: Reference to Planet.id - use GET /planets/{homeworldId}
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                mass:
+                    type: number
+                    format: double
+                    description: Mass - The mass of the person in kilograms.
+                name:
+                    type: string
+                    description: Name - The name of this person.
+                skinColor:
+                    type: string
+                    description: Skin Color - The skin color of this person.
+                speciesId:
+                    type: string
+                    description: Reference to Species.id - use GET /specieses/{speciesId}
+                starshipConnectionId:
+                    type: string
+                    description: Reference to PersonStarshipsConnection.id - use GET /personstarshipsconnections/{starshipConnectionId}
+                vehicleConnectionId:
+                    type: string
+                    description: Reference to PersonVehiclesConnection.id - use GET /personvehiclesconnections/{vehicleConnectionId}
+            required:
+                - id
+        PersonFilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PersonFilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        PersonStarshipsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PersonStarshipsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Starship.id - use GET /starships/{nodeId}
+            required:
+                - cursor
+        PersonVehiclesConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PersonVehiclesEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Vehicle.id - use GET /vehicles/{nodeId}
+            required:
+                - cursor
+        Planet:
+            type: object
+            description: |-
+                A large mass, planet or planetoid in the Star Wars Universe, at the time of
+                0 ABY.
+            properties:
+                climates:
+                    type: array
+                    description: Climates - The climates of this planet.
+                    items:
+                        type: string
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                diameter:
+                    type: integer
+                    format: int32
+                    description: Diameter - The diameter of this planet in kilometers.
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                filmConnectionId:
+                    type: string
+                    description: Reference to PlanetFilmsConnection.id - use GET /planetfilmsconnections/{filmConnectionId}
+                gravity:
+                    type: string
+                    description: |-
+                        Gravity - A number denoting the gravity of this planet, where "1" is normal or 1 standard
+                        G. "2" is twice or 2 standard Gs. "0.5" is half or 0.5 standard Gs.
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                name:
+                    type: string
+                    description: Name - The name of this planet.
+                orbitalPeriod:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Orbital Period - The number of standard days it takes for this planet to complete a single orbit
+                        of its local star.
+                population:
+                    type: number
+                    format: double
+                    description: Population - The average population of sentient beings inhabiting this planet.
+                residentConnectionId:
+                    type: string
+                    description: Reference to PlanetResidentsConnection.id - use GET /planetresidentsconnections/{residentConnectionId}
+                rotationPeriod:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Rotation Period - The number of standard hours it takes for this planet to complete a single
+                        rotation on its axis.
+                surfaceWater:
+                    type: number
+                    format: double
+                    description: |-
+                        Surface Water - The percentage of the planet surface that is naturally occuring water or bodies
+                        of water.
+                terrains:
+                    type: array
+                    description: Terrains - The terrains of this planet.
+                    items:
+                        type: string
+            required:
+                - id
+        PlanetFilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PlanetFilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        PlanetResidentsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PlanetResidentsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        PlanetsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        PlanetsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Planet.id - use GET /planets/{nodeId}
+            required:
+                - cursor
+        Root:
+            type: object
+            properties:
+                __schema:
+                    type: object
+                __type:
+                    type: object
+                allFilmsId:
+                    type: string
+                    description: Reference to FilmsConnection.id - use GET /filmsconnections/{allFilmsId}
+                allPeopleId:
+                    type: string
+                    description: Reference to PeopleConnection.id - use GET /peopleconnections/{allPeopleId}
+                allPlanetsId:
+                    type: string
+                    description: Reference to PlanetsConnection.id - use GET /planetsconnections/{allPlanetsId}
+                allSpeciesId:
+                    type: string
+                    description: Reference to SpeciesConnection.id - use GET /speciesconnections/{allSpeciesId}
+                allStarshipsId:
+                    type: string
+                    description: Reference to StarshipsConnection.id - use GET /starshipsconnections/{allStarshipsId}
+                allVehiclesId:
+                    type: string
+                    description: Reference to VehiclesConnection.id - use GET /vehiclesconnections/{allVehiclesId}
+                filmId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{filmId}
+                nodeId:
+                    type: string
+                    description: Reference to Node.id - use GET /nodes/{nodeId}
+                personId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{personId}
+                planetId:
+                    type: string
+                    description: Reference to Planet.id - use GET /planets/{planetId}
+                speciesId:
+                    type: string
+                    description: Reference to Species.id - use GET /specieses/{speciesId}
+                starshipId:
+                    type: string
+                    description: Reference to Starship.id - use GET /starships/{starshipId}
+                vehicleId:
+                    type: string
+                    description: Reference to Vehicle.id - use GET /vehicles/{vehicleId}
+            required:
+                - __schema
+        Species:
+            type: object
+            description: A type of person or character within the Star Wars Universe.
+            properties:
+                averageHeight:
+                    type: number
+                    format: double
+                    description: Average Height - The average height of this species in centimeters.
+                averageLifespan:
+                    type: integer
+                    format: int32
+                    description: Average Lifespan - The average lifespan of this species in years, null if unknown.
+                classification:
+                    type: string
+                    description: Classification - The classification of this species, such as "mammal" or "reptile".
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                designation:
+                    type: string
+                    description: Designation - The designation of this species, such as "sentient".
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                eyeColors:
+                    type: array
+                    description: |-
+                        Eye Colors - Common eye colors for this species, null if this species does not typically
+                        have eyes.
+                    items:
+                        type: string
+                filmConnectionId:
+                    type: string
+                    description: Reference to SpeciesFilmsConnection.id - use GET /speciesfilmsconnections/{filmConnectionId}
+                hairColors:
+                    type: array
+                    description: |-
+                        Hair Colors - Common hair colors for this species, null if this species does not typically
+                        have hair.
+                    items:
+                        type: string
+                homeworldId:
+                    type: string
+                    description: Reference to Planet.id - use GET /planets/{homeworldId}
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                language:
+                    type: string
+                    description: Language - The language commonly spoken by this species.
+                name:
+                    type: string
+                    description: Name - The name of this species.
+                personConnectionId:
+                    type: string
+                    description: Reference to SpeciesPeopleConnection.id - use GET /speciespeopleconnections/{personConnectionId}
+                skinColors:
+                    type: array
+                    description: |-
+                        Skin Colors - Common skin colors for this species, null if this species does not typically
+                        have skin.
+                    items:
+                        type: string
+            required:
+                - id
+        SpeciesConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        SpeciesEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Species.id - use GET /specieses/{nodeId}
+            required:
+                - cursor
+        SpeciesFilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        SpeciesFilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        SpeciesPeopleConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        SpeciesPeopleEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        Starship:
+            type: object
+            description: A single transport craft that has hyperdrive capability.
+            properties:
+                MGLT:
+                    type: integer
+                    format: int32
+                    description: |-
+                        M G L T - The Maximum number of Megalights this starship can travel in a standard hour.
+                        A "Megalight" is a standard unit of distance and has never been defined before
+                        within the Star Wars universe. This figure is only really useful for measuring
+                        the difference in speed of starships. We can assume it is similar to AU, the
+                        distance between our Sun (Sol) and Earth.
+                cargoCapacity:
+                    type: number
+                    format: double
+                    description: Cargo Capacity - The maximum number of kilograms that this starship can transport.
+                consumables:
+                    type: string
+                    description: |-
+                        Consumables - The maximum length of time that this starship can provide consumables for its
+                        entire crew without having to resupply.
+                costInCredits:
+                    type: number
+                    format: double
+                    description: Cost In Credits - The cost of this starship new, in galactic credits.
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                crew:
+                    type: string
+                    description: Crew - The number of personnel needed to run or pilot this starship.
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                filmConnectionId:
+                    type: string
+                    description: Reference to StarshipFilmsConnection.id - use GET /starshipfilmsconnections/{filmConnectionId}
+                hyperdriveRating:
+                    type: number
+                    format: double
+                    description: Hyperdrive Rating - The class of this starships hyperdrive.
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                length:
+                    type: number
+                    format: double
+                    description: Length - The length of this starship in meters.
+                manufacturers:
+                    type: array
+                    description: Manufacturers - The manufacturers of this starship.
+                    items:
+                        type: string
+                maxAtmospheringSpeed:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Max Atmosphering Speed - The maximum speed of this starship in atmosphere. null if this starship is
+                        incapable of atmosphering flight.
+                model:
+                    type: string
+                    description: |-
+                        Model - The model or official name of this starship. Such as "T-65 X-wing" or "DS-1
+                        Orbital Battle Station".
+                name:
+                    type: string
+                    description: Name - The name of this starship. The common name, such as "Death Star".
+                passengers:
+                    type: string
+                    description: Passengers - The number of non-essential people this starship can transport.
+                pilotConnectionId:
+                    type: string
+                    description: Reference to StarshipPilotsConnection.id - use GET /starshippilotsconnections/{pilotConnectionId}
+                starshipClass:
+                    type: string
+                    description: |-
+                        Starship Class - The class of this starship, such as "Starfighter" or "Deep Space Mobile
+                        Battlestation"
+            required:
+                - id
+        StarshipFilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        StarshipFilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        StarshipPilotsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        StarshipPilotsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        StarshipsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        StarshipsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Starship.id - use GET /starships/{nodeId}
+            required:
+                - cursor
+        Vehicle:
+            type: object
+            description: A single transport craft that does not have hyperdrive capability
+            properties:
+                cargoCapacity:
+                    type: number
+                    format: double
+                    description: Cargo Capacity - The maximum number of kilograms that this vehicle can transport.
+                consumables:
+                    type: string
+                    description: |-
+                        Consumables - The maximum length of time that this vehicle can provide consumables for its
+                        entire crew without having to resupply.
+                costInCredits:
+                    type: number
+                    format: double
+                    description: Cost In Credits - The cost of this vehicle new, in Galactic Credits.
+                created:
+                    type: string
+                    description: Created - The ISO 8601 date format of the time that this resource was created.
+                crew:
+                    type: string
+                    description: Crew - The number of personnel needed to run or pilot this vehicle.
+                edited:
+                    type: string
+                    description: Edited - The ISO 8601 date format of the time that this resource was edited.
+                filmConnectionId:
+                    type: string
+                    description: Reference to VehicleFilmsConnection.id - use GET /vehiclefilmsconnections/{filmConnectionId}
+                id:
+                    type: string
+                    description: Id - The ID of an object
+                length:
+                    type: number
+                    format: double
+                    description: Length - The length of this vehicle in meters.
+                manufacturers:
+                    type: array
+                    description: Manufacturers - The manufacturers of this vehicle.
+                    items:
+                        type: string
+                maxAtmospheringSpeed:
+                    type: integer
+                    format: int32
+                    description: Max Atmosphering Speed - The maximum speed of this vehicle in atmosphere.
+                model:
+                    type: string
+                    description: |-
+                        Model - The model or official name of this vehicle. Such as "All-Terrain Attack
+                        Transport".
+                name:
+                    type: string
+                    description: |-
+                        Name - The name of this vehicle. The common name, such as "Sand Crawler" or "Speeder
+                        bike".
+                passengers:
+                    type: string
+                    description: Passengers - The number of non-essential people this vehicle can transport.
+                pilotConnectionId:
+                    type: string
+                    description: Reference to VehiclePilotsConnection.id - use GET /vehiclepilotsconnections/{pilotConnectionId}
+                vehicleClass:
+                    type: string
+                    description: Vehicle Class - The class of this vehicle, such as "Wheeled" or "Repulsorcraft".
+            required:
+                - id
+        VehicleFilmsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        VehicleFilmsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Film.id - use GET /films/{nodeId}
+            required:
+                - cursor
+        VehiclePilotsConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        VehiclePilotsEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Person.id - use GET /persons/{nodeId}
+            required:
+                - cursor
+        VehiclesConnection:
+            type: object
+            description: A connection to a list of items.
+            properties:
+                pageInfoId:
+                    type: string
+                    description: Reference to PageInfo.id - use GET /pageinfos/{pageInfoId}
+                totalCount:
+                    type: integer
+                    format: int32
+                    description: |-
+                        Total Count - A count of the total number of objects in this connection, ignoring pagination.
+                        This allows a client to fetch the first five objects by passing "5" as the
+                        argument to "first", then fetch the total count so it could display "5 of 83",
+                        for example.
+            required:
+                - pageInfoId
+        VehiclesEdge:
+            type: object
+            description: An edge in a connection.
+            properties:
+                cursor:
+                    type: string
+                    description: Cursor - A cursor for use in pagination
+                nodeId:
+                    type: string
+                    description: Reference to Vehicle.id - use GET /vehicles/{nodeId}
+            required:
+                - cursor`;
+        document.getElementById('yaml-code').textContent = yamlCode;
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>

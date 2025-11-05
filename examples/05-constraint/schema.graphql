@@ -1,0 +1,148 @@
+"""
+@constraint Directive Example
+
+This schema demonstrates how validation constraints from the @constraint directive
+(a de facto standard in the GraphQL community) are converted to OpenAPI validation
+properties.
+
+Common @constraint arguments:
+- minLength, maxLength: String length validation
+- min, max: Numeric range validation
+- pattern: Regex pattern validation
+- format: String format validation (email, url, etc.)
+"""
+
+directive @constraint(
+  minLength: Int
+  maxLength: Int
+  min: Float
+  max: Float
+  pattern: String
+  format: String
+) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION | ARGUMENT_DEFINITION
+
+type Query {
+  "Get all products"
+  products: [Product!]!
+
+  "Search products by name (with constraints)"
+  searchProducts(query: String! @constraint(minLength: 3, maxLength: 100)): [Product!]!
+
+  "Find users by age range"
+  usersByAge(minAge: Int! @constraint(min: 0, max: 150)): [User!]!
+}
+
+type Mutation {
+  "Create a new user with validated input"
+  createUser(input: CreateUserInput!): User!
+
+  "Create a product with constraints"
+  createProduct(input: CreateProductInput!): Product!
+
+  "Update user profile"
+  updateProfile(input: UpdateProfileInput!): User!
+}
+
+"""
+User type with constraint validations
+"""
+type User {
+  id: ID!
+
+  "Username must be 3-20 alphanumeric characters"
+  username: String! @constraint(minLength: 3, maxLength: 20, pattern: "^[a-zA-Z0-9_]+$")
+
+  "Full name with length constraints"
+  name: String! @constraint(minLength: 1, maxLength: 100)
+
+  "Valid email address"
+  email: String! @constraint(format: "email")
+
+  "Age must be between 13 and 120"
+  age: Int @constraint(min: 13, max: 120)
+
+  "Bio with character limit"
+  bio: String @constraint(maxLength: 500)
+
+  "Website URL"
+  website: String @constraint(format: "url")
+}
+
+"""
+Product type with price constraints
+"""
+type Product {
+  id: ID!
+
+  "Product name"
+  name: String! @constraint(minLength: 1, maxLength: 200)
+
+  "Product description"
+  description: String @constraint(maxLength: 2000)
+
+  "Price must be positive"
+  price: Float! @constraint(min: 0.01)
+
+  "Stock quantity (non-negative)"
+  stock: Int! @constraint(min: 0)
+
+  "SKU format: ABC-12345"
+  sku: String! @constraint(pattern: "^[A-Z]{3}-[0-9]{5}$")
+
+  "Discount percentage (0-100)"
+  discountPercent: Float @constraint(min: 0, max: 100)
+}
+
+"""
+Input type for creating users with validation
+"""
+input CreateUserInput {
+  "Username (3-20 chars, alphanumeric)"
+  username: String! @constraint(minLength: 3, maxLength: 20, pattern: "^[a-zA-Z0-9_]+$")
+
+  "Full name (required)"
+  name: String! @constraint(minLength: 1, maxLength: 100)
+
+  "Valid email address"
+  email: String! @constraint(format: "email")
+
+  "Password (min 8 chars, must contain letter and number)"
+  password: String! @constraint(minLength: 8, maxLength: 128, pattern: "^(?=.*[A-Za-z])(?=.*\\d).+$")
+
+  "Age (13+)"
+  age: Int @constraint(min: 13, max: 120)
+}
+
+"""
+Input type for creating products
+"""
+input CreateProductInput {
+  "Product name"
+  name: String! @constraint(minLength: 1, maxLength: 200)
+
+  "Product description"
+  description: String @constraint(maxLength: 2000)
+
+  "Price (must be positive)"
+  price: Float! @constraint(min: 0.01, max: 1000000)
+
+  "Initial stock quantity"
+  stock: Int! @constraint(min: 0, max: 999999)
+
+  "SKU code"
+  sku: String! @constraint(pattern: "^[A-Z]{3}-[0-9]{5}$")
+}
+
+"""
+Input type for profile updates
+"""
+input UpdateProfileInput {
+  "Updated name"
+  name: String @constraint(minLength: 1, maxLength: 100)
+
+  "Updated bio"
+  bio: String @constraint(maxLength: 500)
+
+  "Website URL"
+  website: String @constraint(format: "url")
+}

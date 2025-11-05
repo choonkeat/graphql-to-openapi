@@ -1,0 +1,5 @@
+{
+  "number": "03",
+  "title": "@deprecated Directive",
+  "description": "Illustrates how GraphQL's @deprecated directive is converted to OpenAPI's deprecated flag, preserving API evolution information."
+}

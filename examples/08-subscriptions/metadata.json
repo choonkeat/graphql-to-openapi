@@ -1,0 +1,5 @@
+{
+  "number": "08",
+  "title": "Subscriptions (SSE)",
+  "description": "Shows how GraphQL subscriptions are converted to Server-Sent Events (SSE) endpoints for real-time streaming, providing a perfect fit for OpenAPI documentation."
+}

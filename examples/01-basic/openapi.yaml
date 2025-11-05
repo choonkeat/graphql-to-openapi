@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+    title: A simple blog schema demonstrating basic GraphQL to OpenAPI conversion.
+    description: |-
+        This example shows how the converter handles:
+        - Lists → separate endpoints
+        - Object references → ID fields
+        - Nested types → sub-resource routes
+
+        ---
+
+        Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /users:
+        get:
+            operationId: users
+            summary: Fetch all users from the database
+            description: Fetch all users from the database
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/User'
+    /users/{id}/posts:
+        get:
+            operationId: getUserPosts
+            summary: Get posts by user
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Post'
+components:
+    schemas:
+        Post:
+            type: object
+            description: |-
+                A blog post written by a user.
+                Posts can have multiple comments.
+            properties:
+                authorId:
+                    type: string
+                    description: Reference to User.id - use GET /users/{authorId}
+                content:
+                    type: string
+                    description: Content - The post content
+                id:
+                    type: string
+                title:
+                    type: string
+                    description: Title - The post title
+            required:
+                - id
+                - title
+                - content
+                - authorId
+        User:
+            type: object
+            description: |-
+                Represents a user in the system.
+                Users can create posts and comment on them.
+            properties:
+                email:
+                    type: string
+                    description: Email - Email address for the user
+                id:
+                    type: string
+                name:
+                    type: string
+                    description: Name - The user's full name
+            required:
+                - id
+                - name
+                - email

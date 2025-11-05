@@ -1,0 +1,77 @@
+"""
+Example schema demonstrating GraphQL Subscriptions converted to SSE endpoints
+"""
+
+type Query {
+  """Get a task by ID"""
+  task(id: ID!): Task
+
+  """List all tasks"""
+  tasks: [Task!]!
+
+  """Get a message by ID"""
+  message(id: ID!): Message
+
+  """Get messages in a channel"""
+  messages(channelId: ID!): [Message!]!
+}
+
+type Mutation {
+  """Create a new task"""
+  createTask(title: String!, description: String): Task!
+
+  """Update a task"""
+  updateTask(id: ID!, title: String, status: TaskStatus): Task!
+
+  """Send a message to a channel"""
+  sendMessage(channelId: ID!, content: String!): Message!
+}
+
+type Subscription {
+  """Subscribe to updates for a specific task"""
+  taskUpdated(id: ID!): Task!
+
+  """Subscribe to all task updates"""
+  allTasksUpdated: Task!
+
+  """Subscribe to new messages in a channel"""
+  newMessage(channelId: ID!): Message!
+
+  """Subscribe to message updates with optional filter"""
+  messageStream(channelId: ID!, userId: ID): Message!
+
+  """Subscribe to task status changes"""
+  taskStatusChanged(id: ID!): TaskStatusEvent!
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: TaskStatus!
+  createdAt: String!
+  updatedAt: String!
+  assigneeId: ID
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+  ARCHIVED
+}
+
+type Message {
+  id: ID!
+  channelId: ID!
+  userId: ID!
+  content: String!
+  createdAt: String!
+}
+
+type TaskStatusEvent {
+  taskId: ID!
+  oldStatus: TaskStatus!
+  newStatus: TaskStatus!
+  changedAt: String!
+}

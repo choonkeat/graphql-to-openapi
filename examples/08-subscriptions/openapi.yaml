@@ -1,0 +1,389 @@
+openapi: 3.0.0
+info:
+    title: Example schema demonstrating GraphQL Subscriptions converted to SSE endpoints
+    description: Converted from GraphQL (1.0.0)
+    version: 1.0.0
+paths:
+    /allTasksUpdated:
+        get:
+            operationId: subscribeAllTasksUpdated
+            summary: 'Subscribe: All Tasks Updated'
+            description: |-
+                All Tasks Updated - Subscribe to all task updates
+
+                Server-Sent Events (SSE) stream.
+
+                Each event is formatted as:
+                  event: allTasksUpdated
+                  data: <JSON-encoded Task object>
+
+                Example:
+                  event: allTasksUpdated
+                  data: {"id":"123",...}
+
+                The connection remains open and events are pushed as they occur.
+                Use the EventSource API in browsers or any SSE client library.
+            responses:
+                "200":
+                    description: SSE stream of Task events
+                    content:
+                        text/event-stream:
+                            schema:
+                                type: string
+                                description: Server-Sent Events stream. Each event contains a Task object in JSON format.
+    /message:
+        get:
+            operationId: message
+            summary: Get a message by ID
+            description: Get a message by ID
+            parameters:
+                - name: id
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Message'
+    /messageStream/{channelId}:
+        get:
+            operationId: subscribeMessageStream
+            summary: 'Subscribe: Message Stream'
+            description: |-
+                Message Stream - Subscribe to message updates with optional filter
+
+                Server-Sent Events (SSE) stream.
+
+                Each event is formatted as:
+                  event: messageStream
+                  data: <JSON-encoded Message object>
+
+                Example:
+                  event: messageStream
+                  data: {"id":"123",...}
+
+                The connection remains open and events are pushed as they occur.
+                Use the EventSource API in browsers or any SSE client library.
+            parameters:
+                - name: channelId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: userId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: SSE stream of Message events
+                    content:
+                        text/event-stream:
+                            schema:
+                                type: string
+                                description: Server-Sent Events stream. Each event contains a Message object in JSON format.
+    /messages:
+        get:
+            operationId: messages
+            summary: Get messages in a channel
+            description: Get messages in a channel
+            parameters:
+                - name: channelId
+                  in: query
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Message'
+    /newMessage/{channelId}:
+        get:
+            operationId: subscribeNewMessage
+            summary: 'Subscribe: New Message'
+            description: |-
+                New Message - Subscribe to new messages in a channel
+
+                Server-Sent Events (SSE) stream.
+
+                Each event is formatted as:
+                  event: newMessage
+                  data: <JSON-encoded Message object>
+
+                Example:
+                  event: newMessage
+                  data: {"id":"123",...}
+
+                The connection remains open and events are pushed as they occur.
+                Use the EventSource API in browsers or any SSE client library.
+            parameters:
+                - name: channelId
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: SSE stream of Message events
+                    content:
+                        text/event-stream:
+                            schema:
+                                type: string
+                                description: Server-Sent Events stream. Each event contains a Message object in JSON format.
+    /sendMessage:
+        post:
+            operationId: sendMessage
+            summary: Send Message
+            description: Send Message - Send a message to a channel
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                channelId:
+                                    type: string
+                                content:
+                                    type: string
+                            required:
+                                - channelId
+                                - content
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Message'
+    /taskStatusChanged/{id}:
+        get:
+            operationId: subscribeTaskStatusChanged
+            summary: 'Subscribe: Task Status Changed'
+            description: |-
+                Task Status Changed - Subscribe to task status changes
+
+                Server-Sent Events (SSE) stream.
+
+                Each event is formatted as:
+                  event: taskStatusChanged
+                  data: <JSON-encoded TaskStatusEvent object>
+
+                Example:
+                  event: taskStatusChanged
+                  data: {"id":"123",...}
+
+                The connection remains open and events are pushed as they occur.
+                Use the EventSource API in browsers or any SSE client library.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: SSE stream of TaskStatusEvent events
+                    content:
+                        text/event-stream:
+                            schema:
+                                type: string
+                                description: Server-Sent Events stream. Each event contains a TaskStatusEvent object in JSON format.
+    /taskUpdated/{id}:
+        get:
+            operationId: subscribeTaskUpdated
+            summary: 'Subscribe: Task Updated'
+            description: |-
+                Task Updated - Subscribe to updates for a specific task
+
+                Server-Sent Events (SSE) stream.
+
+                Each event is formatted as:
+                  event: taskUpdated
+                  data: <JSON-encoded Task object>
+
+                Example:
+                  event: taskUpdated
+                  data: {"id":"123",...}
+
+                The connection remains open and events are pushed as they occur.
+                Use the EventSource API in browsers or any SSE client library.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: SSE stream of Task events
+                    content:
+                        text/event-stream:
+                            schema:
+                                type: string
+                                description: Server-Sent Events stream. Each event contains a Task object in JSON format.
+    /tasks:
+        get:
+            operationId: listTasks
+            summary: List tasks
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Task'
+        post:
+            operationId: createTask
+            summary: Create a new task
+            description: Create a new task
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                description:
+                                    type: string
+                                title:
+                                    type: string
+                            required:
+                                - title
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+    /tasks/{id}:
+        get:
+            operationId: getTask
+            summary: Get task by ID
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+        put:
+            operationId: updateTask
+            summary: Update a task
+            description: Update a task
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: string
+                                status:
+                                    $ref: '#/components/schemas/TaskStatus'
+                                title:
+                                    type: string
+                            required:
+                                - id
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Task'
+components:
+    schemas:
+        Message:
+            type: object
+            properties:
+                channelId:
+                    type: string
+                content:
+                    type: string
+                createdAt:
+                    type: string
+                id:
+                    type: string
+                userId:
+                    type: string
+            required:
+                - id
+                - channelId
+                - userId
+                - content
+                - createdAt
+        Task:
+            type: object
+            properties:
+                assigneeId:
+                    type: string
+                createdAt:
+                    type: string
+                description:
+                    type: string
+                id:
+                    type: string
+                statusId:
+                    type: string
+                    description: Reference to TaskStatus.id - use GET /taskstatuses/{statusId}
+                title:
+                    type: string
+                updatedAt:
+                    type: string
+            required:
+                - id
+                - title
+                - statusId
+                - createdAt
+                - updatedAt
+        TaskStatus:
+            type: string
+            enum:
+                - TODO
+                - IN_PROGRESS
+                - DONE
+                - ARCHIVED
+        TaskStatusEvent:
+            type: object
+            properties:
+                changedAt:
+                    type: string
+                newStatusId:
+                    type: string
+                    description: Reference to TaskStatus.id - use GET /taskstatuses/{newStatusId}
+                oldStatusId:
+                    type: string
+                    description: Reference to TaskStatus.id - use GET /taskstatuses/{oldStatusId}
+                taskId:
+                    type: string
+            required:
+                - taskId
+                - oldStatusId
+                - newStatusId
+                - changedAt

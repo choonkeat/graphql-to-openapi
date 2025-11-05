@@ -1,0 +1,5 @@
+{
+  "number": "09",
+  "title": "Interfaces & Unions",
+  "description": "Demonstrates how GraphQL interfaces (single/multiple implementation) and union types are converted to OpenAPI schemas with oneOf patterns."
+}

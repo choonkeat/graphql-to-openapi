@@ -1,0 +1,5 @@
+{
+  "number": "04",
+  "title": "@specifiedBy Directive",
+  "description": "Demonstrates how custom scalar types with specification URLs map to OpenAPI formats (UUID, DateTime, etc.)."
+}

@@ -1,0 +1,150 @@
+"""
+Example schema demonstrating GraphQL Interfaces and Unions
+
+Shows how interfaces and unions are converted to OpenAPI schemas
+"""
+
+type Query {
+  """Get any node by its ID"""
+  node(id: ID!): Node
+
+  """Get all content items"""
+  content: [Content!]!
+
+  """Search across all content types"""
+  search(query: String!): [SearchResult!]!
+
+  """Get an article by ID"""
+  article(id: ID!): Article
+
+  """Get a video by ID"""
+  video(id: ID!): Video
+
+  """Get all articles"""
+  articles: [Article!]!
+
+  """Get all videos"""
+  videos: [Video!]!
+}
+
+type Mutation {
+  """Create a new article"""
+  createArticle(title: String!, content: String!, authorId: ID!): Article!
+
+  """Create a new video"""
+  createVideo(title: String!, url: String!, duration: Int!): Video!
+
+  """Publish any content item"""
+  publishContent(id: ID!): Content!
+}
+
+"""Base interface for all entities with IDs"""
+interface Node {
+  """Unique identifier"""
+  id: ID!
+}
+
+"""Interface for timestamped entities"""
+interface Timestamped {
+  """When the entity was created"""
+  createdAt: String!
+
+  """When the entity was last updated"""
+  updatedAt: String!
+}
+
+"""Interface for content that can be published"""
+interface Content {
+  """Unique identifier"""
+  id: ID!
+
+  """Content title"""
+  title: String!
+
+  """Publication status"""
+  published: Boolean!
+
+  """When the entity was created"""
+  createdAt: String!
+
+  """When the entity was last updated"""
+  updatedAt: String!
+}
+
+"""Article content type"""
+type Article implements Node & Timestamped & Content {
+  """Unique identifier"""
+  id: ID!
+
+  """Article title"""
+  title: String!
+
+  """Article body content"""
+  content: String!
+
+  """ID of the article author"""
+  authorId: ID!
+
+  """Publication status"""
+  published: Boolean!
+
+  """When the article was created"""
+  createdAt: String!
+
+  """When the article was last updated"""
+  updatedAt: String!
+
+  """Estimated reading time in minutes"""
+  readingTime: Int!
+}
+
+"""Video content type"""
+type Video implements Node & Timestamped & Content {
+  """Unique identifier"""
+  id: ID!
+
+  """Video title"""
+  title: String!
+
+  """Video URL"""
+  url: String!
+
+  """Video duration in seconds"""
+  duration: Int!
+
+  """Publication status"""
+  published: Boolean!
+
+  """When the video was created"""
+  createdAt: String!
+
+  """When the video was last updated"""
+  updatedAt: String!
+
+  """Video thumbnail URL"""
+  thumbnail: String
+}
+
+"""User who creates content"""
+type User implements Node & Timestamped {
+  """Unique identifier"""
+  id: ID!
+
+  """User's display name"""
+  name: String!
+
+  """User's email address"""
+  email: String!
+
+  """When the user account was created"""
+  createdAt: String!
+
+  """When the user account was last updated"""
+  updatedAt: String!
+}
+
+"""Union of all searchable content types"""
+union SearchResult = Article | Video | User
+
+"""Union of all publishable content types"""
+union PublishableContent = Article | Video

@@ -1,0 +1,5 @@
+{
+  "number": "01",
+  "title": "Basic",
+  "description": "Demonstrates fundamental conversion principles: queries become GET endpoints, lists become sub-resources, and object references become ID fields."
+}

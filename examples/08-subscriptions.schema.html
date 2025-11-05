@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-subscriptions - GraphQL Schema</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style id="custom-overrides">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1e1e1e;
+            height: 100vh;
+            overflow: auto;
+        }
+        pre[class*="language-"] {
+            margin: 0 !important;
+            padding: 2rem !important;
+            background: #1e1e1e !important;
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            min-height: 100vh;
+        }
+        code[class*="language-"] {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace !important;
+        }
+        /* Tone down string colors - make them less attention-grabbing */
+        .token.string {
+            color: #606060 !important;
+        }
+        /* Also tone down comments */
+        .token.comment {
+            color: #5a5a5a !important;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-graphql" id="schema-code"></code></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-graphql.min.js"></script>
+    <script>
+        // Set schema content
+        const schemaCode = `"""
+Example schema demonstrating GraphQL Subscriptions converted to SSE endpoints
+"""
+
+type Query {
+  """Get a task by ID"""
+  task(id: ID!): Task
+
+  """List all tasks"""
+  tasks: [Task!]!
+
+  """Get a message by ID"""
+  message(id: ID!): Message
+
+  """Get messages in a channel"""
+  messages(channelId: ID!): [Message!]!
+}
+
+type Mutation {
+  """Create a new task"""
+  createTask(title: String!, description: String): Task!
+
+  """Update a task"""
+  updateTask(id: ID!, title: String, status: TaskStatus): Task!
+
+  """Send a message to a channel"""
+  sendMessage(channelId: ID!, content: String!): Message!
+}
+
+type Subscription {
+  """Subscribe to updates for a specific task"""
+  taskUpdated(id: ID!): Task!
+
+  """Subscribe to all task updates"""
+  allTasksUpdated: Task!
+
+  """Subscribe to new messages in a channel"""
+  newMessage(channelId: ID!): Message!
+
+  """Subscribe to message updates with optional filter"""
+  messageStream(channelId: ID!, userId: ID): Message!
+
+  """Subscribe to task status changes"""
+  taskStatusChanged(id: ID!): TaskStatusEvent!
+}
+
+type Task {
+  id: ID!
+  title: String!
+  description: String
+  status: TaskStatus!
+  createdAt: String!
+  updatedAt: String!
+  assigneeId: ID
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+  ARCHIVED
+}
+
+type Message {
+  id: ID!
+  channelId: ID!
+  userId: ID!
+  content: String!
+  createdAt: String!
+}
+
+type TaskStatusEvent {
+  taskId: ID!
+  oldStatus: TaskStatus!
+  newStatus: TaskStatus!
+  changedAt: String!
+}`;
+        document.getElementById('schema-code').textContent = schemaCode;
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>

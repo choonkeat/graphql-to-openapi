@@ -1,0 +1,5 @@
+{
+  "number": "05",
+  "title": "@constraint Directive",
+  "description": "Shows how validation constraints are converted to OpenAPI validation properties (minLength, maxLength, pattern, min, max, format)."
+}

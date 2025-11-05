@@ -1,0 +1,81 @@
+"""
+RESTful CRUD Operations Example
+
+This schema demonstrates REST pattern detection. When the converter finds
+both list operations (users: [User!]!) AND create mutations (createUser),
+it consolidates them into proper RESTful routes with HTTP methods.
+
+Pattern detection rules:
+1. Must have BOTH {resource}s: [T] + create{Resource}(...) to trigger
+2. Strict matching - no fuzzy matching (e.g., addUser won't match)
+3. Additional operations (get, update, delete) are optional but recognized
+"""
+
+type Query {
+  "List all users - triggers REST pattern detection"
+  users: [User!]!
+
+  "Get a single user by ID - consolidated into GET /users/{id}"
+  user(id: ID!): User
+
+  "List all posts"
+  posts: [Post!]!
+
+  "Get a single post by ID"
+  post(id: ID!): Post
+}
+
+type Mutation {
+  "Create a new user - triggers REST pattern for 'user'"
+  createUser(name: String!, email: String!): User!
+
+  "Update an existing user - consolidated into PUT /users/{id}"
+  updateUser(id: ID!, name: String, email: String): User!
+
+  "Delete a user - consolidated into DELETE /users/{id}"
+  deleteUser(id: ID!): Boolean!
+
+  "Create a new post - triggers REST pattern for 'post'"
+  createPost(title: String!, content: String!, authorId: ID!): Post!
+
+  "Update a post - consolidated into PUT /posts/{id}"
+  updatePost(id: ID!, title: String, content: String): Post!
+
+  "Delete a post - consolidated into DELETE /posts/{id}"
+  deletePost(id: ID!): Boolean!
+
+  "This mutation does NOT match REST pattern (wrong prefix)"
+  addComment(postId: ID!, text: String!): Comment!
+}
+
+"""
+User entity with full CRUD operations
+Result: Consolidated into /users with proper HTTP methods
+"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  posts: [Post!]!
+}
+
+"""
+Post entity with full CRUD operations
+Result: Consolidated into /posts with proper HTTP methods
+"""
+type Post {
+  id: ID!
+  title: String!
+  content: String!
+  authorId: ID!
+}
+
+"""
+Comment entity without REST pattern
+Result: Only POST /addComment (no consolidation)
+"""
+type Comment {
+  id: ID!
+  text: String!
+  postId: ID!
+}
