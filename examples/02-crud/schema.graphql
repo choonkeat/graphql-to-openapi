@@ -23,6 +23,9 @@ type Query {
 
   "Get a single post by ID"
   post(id: ID!): Post
+
+  "MINIMAL EXAMPLE: List all audit entries - triggers REST pattern with just 2 operations"
+  auditEntries: [AuditEntry!]!
 }
 
 type Mutation {
@@ -43,6 +46,9 @@ type Mutation {
 
   "Delete a post - consolidated into DELETE /posts/{id}"
   deletePost(id: ID!): Boolean!
+
+  "MINIMAL EXAMPLE: Create audit entry - with just auditEntries query, triggers REST consolidation"
+  createAuditEntry(action: String!, userId: ID!, timestamp: String!): AuditEntry!
 
   "This mutation does NOT match REST pattern (wrong prefix)"
   addComment(postId: ID!, text: String!): Comment!
@@ -78,4 +84,16 @@ type Comment {
   id: ID!
   text: String!
   postId: ID!
+}
+
+"""
+AuditEntry - MINIMAL EXAMPLE
+Only has 2 operations: auditEntries (list) + createAuditEntry (create)
+Result: Consolidated into /auditEntries with GET and POST methods
+"""
+type AuditEntry {
+  id: ID!
+  action: String!
+  userId: ID!
+  timestamp: String!
 }

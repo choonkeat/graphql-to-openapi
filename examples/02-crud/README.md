@@ -56,6 +56,27 @@ PUT    /posts/{id}  → Update post
 DELETE /posts/{id}  → Delete post
 ```
 
+#### AuditEntry Resource (Minimal - Only 2 Operations)
+```graphql
+Query {
+  auditEntries: [AuditEntry!]!  # List only
+}
+Mutation {
+  createAuditEntry(...)         # Create only
+}
+```
+
+**Converts to:**
+```
+GET    /auditEntries  → List all audit entries
+POST   /auditEntries  → Create audit entry
+```
+
+This demonstrates the **minimum required** to trigger REST consolidation. Notice:
+- No `auditEntry(id)` query → No GET `/auditEntries/{id}` endpoint
+- No update/delete mutations → No PUT/DELETE endpoints
+- Just the 2 required operations consolidate into REST endpoints
+
 #### Comment (No Pattern - Wrong Prefix)
 ```graphql
 Mutation {

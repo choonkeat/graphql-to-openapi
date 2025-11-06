@@ -89,6 +89,47 @@ paths:
                         application/json:
                             schema:
                                 \$ref: '#/components/schemas/Comment'
+    /auditEntries:
+        get:
+            operationId: listAuditEntries
+            summary: List auditEntries
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    \$ref: '#/components/schemas/AuditEntry'
+        post:
+            operationId: createAuditEntry
+            summary: Create Audit Entry
+            description: 'Create Audit Entry - MINIMAL EXAMPLE: Create audit entry - with just auditEntries query, triggers REST consolidation'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                action:
+                                    type: string
+                                timestamp:
+                                    type: string
+                                userId:
+                                    type: string
+                            required:
+                                - action
+                                - userId
+                                - timestamp
+            responses:
+                "200":
+                    description: Successful response
+                    content:
+                        application/json:
+                            schema:
+                                \$ref: '#/components/schemas/AuditEntry'
     /posts:
         get:
             operationId: listPosts
@@ -321,6 +362,26 @@ paths:
                                     \$ref: '#/components/schemas/Post'
 components:
     schemas:
+        AuditEntry:
+            type: object
+            description: |-
+                AuditEntry - MINIMAL EXAMPLE
+                Only has 2 operations: auditEntries (list) + createAuditEntry (create)
+                Result: Consolidated into /auditEntries with GET and POST methods
+            properties:
+                action:
+                    type: string
+                id:
+                    type: string
+                timestamp:
+                    type: string
+                userId:
+                    type: string
+            required:
+                - id
+                - action
+                - userId
+                - timestamp
         Comment:
             type: object
             description: |-
